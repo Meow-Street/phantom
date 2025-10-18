@@ -1,9 +1,10 @@
 mod app;
 mod renderer;
 
-use winit::error::EventLoopError;
-use winit::event_loop::ControlFlow;
-use winit::event_loop::EventLoop;
+use winit::{
+    error::EventLoopError,
+    event_loop::{ControlFlow, EventLoop},
+};
 
 fn main() -> Result<(), EventLoopError> {
     let event_loop = EventLoop::new().unwrap();

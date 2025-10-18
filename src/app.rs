@@ -1,9 +1,11 @@
+use winit::{
+    application::ApplicationHandler,
+    event::WindowEvent,
+    event_loop::ActiveEventLoop,
+    window::{Window, WindowId},
+};
+
 use crate::renderer::Renderer;
-use winit::application::ApplicationHandler;
-use winit::event::WindowEvent;
-use winit::event_loop::ActiveEventLoop;
-use winit::window::Window;
-use winit::window::WindowId;
 
 pub struct App {
     pub window: Option<Window>,
