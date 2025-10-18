@@ -1,13 +1,10 @@
 mod app;
 mod renderer;
 
-use winit::{
-    error::EventLoopError,
-    event_loop::{ControlFlow, EventLoop},
-};
+use winit::event_loop::{ControlFlow, EventLoop};
 
-fn main() -> Result<(), EventLoopError> {
-    let event_loop = EventLoop::new().unwrap();
+fn main() -> anyhow::Result<()> {
+    let event_loop = EventLoop::new()?;
 
     // ControlFlow::Poll continuously runs the event loop, even if the OS hasn't
     // dispatched any events. This is ideal for games and similar applications.
@@ -15,5 +12,7 @@ fn main() -> Result<(), EventLoopError> {
 
     let mut app = app::App::new();
 
-    event_loop.run_app(&mut app)
+    event_loop.run_app(&mut app)?;
+
+    Ok(())
 }
