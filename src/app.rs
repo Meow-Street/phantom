@@ -11,7 +11,6 @@ use crate::renderer::Renderer;
 
 pub struct App {
     pub window: Option<Arc<Window>>,
-    #[allow(dead_code)] // TODO: Remove this once the renderer is implemented.
     pub renderer: Option<Renderer>,
 }
 
@@ -58,33 +57,33 @@ impl ApplicationHandler for App {
     }
 
     fn window_event(&mut self, event_loop: &ActiveEventLoop, _id: WindowId, event: WindowEvent) {
+        let window = &mut self.window.as_mut().unwrap();
+        let renderer = &mut self.renderer.as_mut().unwrap();
+
         match event {
             WindowEvent::CloseRequested => {
                 println!("The close button was pressed; stopping");
                 event_loop.exit();
             }
             WindowEvent::RedrawRequested => {
-                // TODO: Update state as needed
-                match self.renderer.as_mut().unwrap().render() {
+                // Main loop logic here
+
+                // TODO: Update app state as needed
+
+                match renderer.render() {
                     Ok(_) => (),
                     // Reconfig surface if it's lost or outdated
                     Err(wgpu::SurfaceError::Lost | wgpu::SurfaceError::Outdated) => {
-                        let size = self.window.as_ref().unwrap().inner_size();
-                        self.renderer
-                            .as_mut()
-                            .unwrap()
-                            .resize(size.width, size.height);
+                        let size = window.inner_size();
+                        renderer.resize(size.width, size.height);
                     }
                     Err(e) => eprintln!("Error rendering: {}", e),
                 }
 
-                self.window.as_ref().unwrap().request_redraw();
+                window.request_redraw();
             }
             WindowEvent::Resized(physical_size) => {
-                self.renderer
-                    .as_mut()
-                    .unwrap()
-                    .resize(physical_size.width, physical_size.height);
+                renderer.resize(physical_size.width, physical_size.height);
             }
             WindowEvent::KeyboardInput {
                 event:

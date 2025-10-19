@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use winit::window::Window;
 
-/// The renderer for the application. This is a placeholder for now.
+/// The renderer for the application
 pub struct Renderer {
     surface: wgpu::Surface<'static>,
     device: wgpu::Device,
@@ -32,6 +32,7 @@ impl Renderer {
             })
             .await?;
 
+        // TODO: There are probably some changes needed here to support wasm
         let (device, queue) = adapter
             .request_device(&wgpu::DeviceDescriptor {
                 label: None,
@@ -85,13 +86,12 @@ impl Renderer {
     }
 
     pub fn render(&mut self) -> Result<(), wgpu::SurfaceError> {
-        // self.window.request_redraw();
-
         // We can't render without a surface configured
         if !self.is_surface_configured {
             return Err(wgpu::SurfaceError::Other);
         }
 
+        // TODO: This is failing on the first render for some reason
         // Get a new texture to draw to
         let output = self.surface.get_current_texture()?;
 
