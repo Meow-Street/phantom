@@ -91,7 +91,7 @@ impl Renderer {
             return Err(wgpu::SurfaceError::Other);
         }
 
-        // TODO: This is failing on the first render for some reason
+        // FIXME: This is failing on the first render for some reason
         // Get a new texture to draw to
         let output = self.surface.get_current_texture()?;
 
@@ -117,9 +117,9 @@ impl Renderer {
                     resolve_target: None,
                     ops: wgpu::Operations {
                         load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.1,
-                            g: 0.1,
-                            b: 0.1,
+                            r: 0.02,
+                            g: 0.02,
+                            b: 0.02,
                             a: 1.0,
                         }),
                         store: wgpu::StoreOp::Store,
